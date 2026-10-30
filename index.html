@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Own World ✿</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+  --bg:#faf7ff;
+  --panel:#ffffff;
+  --purple:#9274c9;
+  --light:#eee7fb;
+  --text:#423951;
+  --muted:#9489a5;
+  --pink:#f9e7ed;
+  --yellow:#fbf1d9;
+  --green:#e7f1e6;
+  --shadow:0 8px 28px #76619b12;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+}
+button,input,textarea {font:inherit}
+button {cursor:pointer}
+.layout {
+  max-width:1250px;
+  margin:auto;
+  padding:22px;
+  display:grid;
+  grid-template-columns:225px 1fr;
+  gap:22px;
+}
+.sidebar {
+  background:var(--panel);
+  border:1px solid #eee8f4;
+  border-radius:24px;
+  padding:22px 16px;
+  min-height:calc(100vh - 44px);
+  position:sticky;
+  top:22px;
+  height:calc(100vh - 44px);
+  box-shadow:var(--shadow);
+}
+.logo {
+  font-family:'Playfair Display',serif;
+  font-size:25px;
+  color:var(--purple);
+  margin:5px 8px 4px;
+}
+.small {
+  color:var(--muted);
+  font-size:12px;
+  margin:0 8px 28px;
+}
+.nav-label {
+  font-size:10px;
+  letter-spacing:2px;
+  color:#aa9fb5;
+  margin:23px 10px 9px;
+}
+.nav-btn {
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  padding:12px;
+  border-radius:13px;
+  text-align:left;
+  margin:3px 0;
+  font-size:13px;
+}
+.nav-btn:hover,.nav-btn.active {
+  background:var(--light);
+  color:var(--purple);
+}
+.main {min-width:0}
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:5px 0 24px;
+  gap:12px;
+}
+.date {font-size:12px;color:var(--muted)}
+.avatar {
+  background:var(--pink);
+  border-radius:50%;
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  font-size:20px;
+}
+.hero {
+  background:linear-gradient(120deg,#eee7fb,#fbeaf0,#fff2df);
+  padding:32px;
+  border-radius:25px;
+  position:relative;
+  overflow:hidden;
+  margin-bottom:22px;
+}
+.hero:after {
+  content:"✿";
+  position:absolute;
+  right:35px;top:10px;
+  font-size:110px;
+  color:#ffffff90;
+}
+.eyebrow {
+  font-size:11px;
+  letter-spacing:2px;
+  color:#8874ae;
+  font-weight:700;
+}
+h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,5vw,45px);
+  margin:12px 0;
+  font-weight:600;
+}
+.hero p {font-size:13px;color:#786d86}
+.primary {
+  background:var(--purple);
+  color:white;
+  border:0;
+  padding:12px 19px;
+  border-radius:12px;
+  margin-top:10px;
+}
+.primary:hover {opacity:.85}
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  margin:27px 0 14px;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:13px;
+}
+.card {
+  background:var(--panel);
+  border:1px solid #eee8f4;
+  border-radius:19px;
+  padding:19px;
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+.room {
+  cursor:pointer;
+  transition:.2s;
+}
+.room:hover {transform:translateY(-4px)}
+.room-icon {font-size:29px}
+.room h3 {font-size:14px;margin:13px 0 5px}
+.room p {font-size:11px;color:var(--muted);margin:0}
+.two {
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:14px;
+  margin-top:14px;
+}
+textarea,input {
+  width:100%;
+  border:1px solid #eee5f5;
+  border-radius:12px;
+  background:#fdfbff;
+  color:var(--text);
+  padding:12px;
+  outline:none;
+}
+textarea:focus,input:focus {border-color:#b8a3df}
+textarea {resize:vertical;min-height:100px}
+.secondary {
+  border:1px solid #e9e0f2;
+  background:white;
+  color:var(--purple);
+  padding:10px 14px;
+  border-radius:11px;
+  font-size:12px;
+}
+.item {
+  padding:12px;
+  background:#faf7ff;
+  border-radius:12px;
+  margin-top:9px;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+.item small {display:block;color:var(--muted);margin-top:6px}
+.item button {
+  border:0;background:transparent;color:#aa8da7;
+  float:right;
+}
+.moods {
+  display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;
+}
+.mood {
+  border:1px solid #eee5f5;
+  background:white;
+  padding:10px;
+  border-radius:12px;
+  font-size:21px;
+}
+.mood.selected {background:var(--light);border-color:var(--purple)}
+.goal-row {
+  display:flex;align-items:center;gap:10px;
+  margin-top:10px;font-size:13px;
+}
+.goal-row span {flex:1;overflow-wrap:anywhere}
+.goal-row button {border:0;background:transparent;color:#aa8da7}
+.page {display:none}
+.page.active {display:block}
+.room-page {
+  background:linear-gradient(130deg,#f0eafa,#fff0f2);
+  padding:25px;border-radius:20px;margin-bottom:15px;
+}
+.room-page h2 {
+  font-family:'Playfair Display',serif;
+  font-size:30px;margin:8px 0;
+}
+.empty {color:var(--muted);font-size:13px;padding:14px 0}
+.footer {
+  text-align:center;color:#aaa0b2;
+  font-size:11px;padding:30px 0 10px;
+}
+@media(max-width:760px) {
+  .layout {display:block;padding:12px}
+  .sidebar {
+    position:static;height:auto;min-height:0;
+    padding:12px;margin-bottom:15px;
+  }
+  .logo {font-size:21px}
+  .small {margin-bottom:10px}
+  .nav-label {display:none}
+  .nav-list {
+    display:flex;overflow-x:auto;gap:5px;
+  }
+  .nav-btn {width:auto;white-space:nowrap;padding:10px}
+  .grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two {grid-template-columns:1fr}
+  .hero {padding:23px}
+  .hero:after {font-size:65px;right:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="logo">your little world ✿</div>
+  <p class="small">a space made by you, for you</p>
+
+  <div class="nav-label">YOUR WORLD</div>
+  <div class="nav-list">
+    <button class="nav-btn active" data-page="home">🏠 My Home</button>
+    <button class="nav-btn" data-page="thoughts">📔 My Thoughts</button>
+    <button class="nav-btn" data-page="school">🏫 My School</button>
+    <button class="nav-btn" data-page="memories">📸 Memories</button>
+    <button class="nav-btn" data-page="mood">🌷 My Mood</button>
+    <button class="nav-btn" data-page="goals">⭐ My Goals</button>
+    <button class="nav-btn" data-page="rooms">🎨 My Rooms</button>
+  </div>
+
+  <div class="nav-label">LITTLE DETAILS</div>
+  <button class="nav-btn" data-page="customize">⚙️ Customize</button>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div>
+      <div class="date" id="today"></div>
+      <div style="font-weight:700;margin-top:5px">A little space just for you ♡</div>
+    </div>
+    <div class="avatar">🌷</div>
+  </div>
+
+  <section class="page active" id="home">
+    <div class="hero">
+      <div class="eyebrow">WELCOME TO YOUR OWN UNIVERSE</div>
+      <h1 id="welcome">This is your world.</h1>
+      <p>Dream a little. Create a little. Be completely yourself.</p>
+      <button class="primary" onclick="showPage('rooms')">Explore my spaces ↗</button>
+    </div>
+
+    <div class="section-title">Your little spaces ✿</div>
+    <div class="grid" id="homeRooms"></div>
+
+    <div class="two">
+      <div class="card">
+        <div style="font-weight:700">💌 A thought for today</div>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;color:#8c78ad">
+          "You are allowed to grow at your own pace."
+        </p>
+        <button class="secondary" onclick="showPage('thoughts')">Write a thought ↗</button>
+      </div>
+      <div class="card">
+        <div style="font-weight:700">🌷 Your daily mood</div>
+        <p style="font-size:12px;color:var(--muted)">How are you feeling today?</p>
+        <button class="secondary" onclick="showPage('mood')">Choose my mood ↗</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="thoughts">
+    <div class="section-title">My little thought diary 📔</div>
+    <p style="color:var(--muted);font-size:13px">A place for everything on your mind. No perfect words needed.</p>
+    <div class="card">
+      <textarea id="thoughtInput" placeholder="Write whatever is on your mind..."></textarea>
+      <button class="primary" onclick="saveThought()">Save my thought ♡</button>
+    </div>
+    <div class="section-title">Your saved thoughts</div>
+    <div id="thoughtList"></div>
+  </section>
+
+  <section class="page" id="school">
+    <div class="section-title">My school corner 🏫</div>
+    <div class="room-page">
+      <div class="room-icon">📚</div>
+      <h2>School days & little memories</h2>
+      <p>Your classes, ideas, school memories and everything in between.</p>
+    </div>
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:12px">Add a school note</div>
+      <input id="schoolInput" placeholder="e.g. Physics chapter 3 revision...">
+      <button class="primary" onclick="addSchoolNote()">Save school note</button>
+      <div id="schoolList"></div>
+    </div>
+  </section>
+
+  <section class="page" id="memories">
+    <div class="section-title">My memory box 📸</div>
+    <div class="card">
+      <p style="font-size:13px;color:var(--muted)">Save a little description of a moment you never want to forget.</p>
+      <input id="memoryInput" placeholder="Give this memory a name...">
+      <button class="primary" onclick="addMemory()">Save memory ♡</button>
+      <div id="memoryList"></div>
+    </div>
+  </section>
+
+  <section class="page" id="mood">
+    <div class="section-title">How is your heart today? 🌷</div>
+    <div class="card">
+      <p style="color:var(--muted);font-size:13px">Pick the emoji that matches your mood.</p>
+      <div class="moods" id="moodButtons">
+        <button class="mood" data-mood="Happy">😊</button>
+        <button class="mood" data-mood="Calm">😌</button>
+        <button class="mood" data-mood="Excited">🤩</button>
+        <button class="mood" data-mood="Thoughtful">🥹</button>
+        <button class="mood" data-mood="Tired">😴</button>
+        <button class="mood" data-mood="Creative">🎨</button>
+      </div>
+      <p id="moodResult" style="font-size:13px;color:var(--purple)"></p>
+    </div>
+  </section>
+
+  <section class="page" id="goals">
+    <div class="section-title">Little steps, big dreams ⭐</div>
+    <div class="card">
+      <input id="goalInput" placeholder="What would you like to achieve?">
+      <button class="primary" onclick="addGoal()">Add my goal +</button>
+      <div id="goalList"></div>
+    </div>
+  </section>
+
+  <section class="page" id="rooms">
+    <div class="section-title">Create your own spaces 🎨</div>
+    <p style="color:var(--muted);font-size:13px">Your world, your rules. Give your room a name and an emoji.</p>
+    <div class="card">
+      <input id="roomName" placeholder="Name your new room...">
+      <input id="roomEmoji" placeholder="Choose an emoji, e.g. 🦋" style="margin-top:9px">
+      <button class="primary" onclick="addRoom()">Create my room +</button>
+    </div>
+    <div class="section-title">All your rooms</div>
+    <div class="grid" id="allRooms"></div>
+  </section>
+
+  <section class="page" id="customize">
+    <div class="section-title">Make it yours ✨</div>
+    <div class="card">
+      <label style="font-size:13px;font-weight:700">What should we call your world?</label>
+      <input id="worldName" placeholder="Your world name..." style="margin-top:9px">
+      <button class="primary" onclick="saveName()">Save world name</button>
+    </div>
+    <div class="card" style="margin-top:13px">
+      <div style="font-weight:700">Choose your colour mood</div>
+      <div class="moods">
+        <button class="mood" onclick="setTheme('lavender')">💜</button>
+        <button class="mood" onclick="setTheme('pink')">🩷</button>
+        <button class="mood" onclick="setTheme('cream')">🤍</button>
+        <button class="mood" onclick="setTheme('mint')">💚</button>
+      </div>
+    </div>
+    <div class="card" style="margin-top:13px">
+      <div style="font-weight:700">Your saved data</div>
+      <p style="font-size:12px;color:var(--muted)">Your entries are stored in this browser on this device. They are not uploaded to an account or cloud.</p>
+      <button class="secondary" onclick="exportData()">Export my data ↓</button>
+    </div>
+  </section>
+
+  <div class="footer">made with ♡ for your little universe · keep being you</div>
+</main>
+</div>
+
+<script>
+const defaults = [
+  {name:"My School",emoji:"🏫",desc:"Classes, notes & memories"},
+  {name:"My Thoughts",emoji:"📔",desc:"Your personal diary"},
+  {name:"My Memories",emoji:"📸",desc:"Little moments forever"},
+  {name:"My Happy Place",emoji:"🌷",desc:"Things that make you smile"},
+  {name:"My Study Corner",emoji:"📚",desc:"Dreams, goals & learning"},
+  {name:"My Secret Space",emoji:"🌙",desc:"A quiet corner for you"}
+];
+
+function getData(key,fallback) {
+  try {
+    const saved = localStorage.getItem("myWorld_"+key);
+    return saved ? JSON.parse(saved) : fallback;
+  } catch(e) { return fallback; }
+}
+function putData(key,value) {
+  try {
+    localStorage.setItem("myWorld_"+key,JSON.stringify(value));
+  } catch(e) {
+    alert("Storage is full or unavailable. Export your data or remove some entries.");
+  }
+}
+let rooms = getData("rooms",defaults);
+let thoughts = getData("thoughts",[]);
+let school = getData("school",[]);
+let memories = getData("memories",[]);
+let goals = getData("goals",[]);
+let mood = getData("mood","");
+let world = getData("world","Your World");
+
+document.getElementById("today").textContent =
+  new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+
+function showPage(id) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  const page = document.getElementById(id);
+  if(!page) return;
+  page.classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b=>
+    b.classList.toggle("active",b.dataset.page===id)
+  );
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>showPage(btn.dataset.page));
+});
+
+function safe(value) {
+  const div=document.createElement("div");
+  div.textContent=String(value);
+  return div.innerHTML;
+}
+function renderRooms() {
+  const html=rooms.map((r,i)=>`
+    <div class="card room" onclick="openRoom(${i})">
+      <div class="room-icon">${safe(r.emoji)}</div>
+      <h3>${safe(r.name)}</h3>
+      <p>${safe(r.desc||"Your own little space")}</p>
+    </div>`).join("");
+  document.getElementById("homeRooms").innerHTML=html;
+  document.getElementById("allRooms").innerHTML=html;
+}
+function renderList(id,items,removeFn) {
+  document.getElementById(id).innerHTML=items.length ? items.map((item,i)=>`
+    <div class="item">
+      <button onclick="${removeFn}(${i})" aria-label="Delete">×</button>
+      ${safe(item.text)}
+      <small>${safe(item.date||"")}</small>
+    </div>`).join("") : '<div class="empty">Nothing here yet. Add your first one ♡</div>';
+}
+function saveThought() {
+  const input=document.getElementById("thoughtInput");
+  if(!input.value.trim()) return alert("Write a little thought first ♡");
+  thoughts.unshift({text:input.value.trim(),date:new Date().toLocaleString()});
+  putData("thoughts",thoughts);
+  input.value="";
+  render();
+}
+function deleteThought(i) {
+  thoughts.splice(i,1);putData("thoughts",thoughts);render();
+}
+function addSchoolNote() {
+  const input=document.getElementById("schoolInput");
+  if(!input.value.trim()) return;
+  school.unshift({text:input.value.trim(),date:new Date().toLocaleDateString()});
+  putData("school",school);input.value="";render();
+}
+function deleteSchool(i) {
+  school.splice(i,1);putData("school",school);render();
+}
+function addMemory() {
+  const input=document.getElementById("memoryInput");
+  if(!input.value.trim()) return;
+  memories.unshift({text:input.value.trim(),date:new Date().toLocaleDateString()});
+  putData("memories",memories);input.value="";render();
+}
+function deleteMemory(i) {
+  memories.splice(i,1);putData("memories",memories);render();
+}
+function addGoal() {
+  const input=document.getElementById("goalInput");
+  if(!input.value.trim()) return;
+  goals.push({text:input.value.trim(),done:false});
+  putData("goals",goals);input.value="";render();
+}
+function toggleGoal(i) {
+  goals[i].done=!goals[i].done;putData("goals",goals);render();
+}
+function deleteGoal(i) {
+  goals.splice(i,1);putData("goals",goals);render();
+}
+function addRoom() {
+  const name=document.getElementById("roomName");
+  const emoji=document.getElementById("roomEmoji");
+  if(!name.value.trim()) return alert("Give your room a name!");
+  rooms.push({name:name.value.trim(),emoji:emoji.value.trim()||"✨",desc:"A space made by you"});
+  putData("rooms",rooms);
+  name.value="";emoji.value="";
+  render();alert("Your new room is ready! ♡");
+}
+function openRoom(i) {
+  const r=rooms[i];
+  alert(r.emoji+" "+r.name+"\n\nYour custom room is ready to explore! More room features are coming soon ♡");
+}
+function saveName() {
+  const value=document.getElementById("worldName").value.trim();
+  if(!value) return alert("Enter a name first!");
+  world=value;putData("world",world);render();
+  alert("Your world has a new name! ♡");
+}
+function setTheme(theme) {
+  const themes={
+    lavender:["#faf7ff","#ffffff","#9274c9","#eee7fb"],
+    pink:["#fff6fa","#ffffff","#cb829e","#f9e7ed"],
+    cream:["#fffaf0","#ffffff","#a58b61","#f5eddc"],
+    mint:["#f3faf5","#ffffff","#6d9b80","#e4f1e7"]
+  };
+  const t=themes[theme];
+  document.documentElement.style.setProperty("--bg",t[0]);
+  document.documentElement.style.setProperty("--panel",t[1]);
+  document.documentElement.style.setProperty("--purple",t[2]);
+  document.documentElement.style.setProperty("--light",t[3]);
+  putData("theme",theme);
+}
+document.querySelectorAll(".mood").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    mood=btn.dataset.mood;
+    putData("mood",mood);
+    document.querySelectorAll(".mood").forEach(b=>b.classList.remove("selected"));
+    btn.classList.add("selected");
+    document.getElementById("moodResult").textContent="Today you're feeling: "+mood+" ♡";
+  });
+});
+function exportData() {
+  const data={rooms,thoughts,school,memories,goals,mood,world};
+  const file=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(file);
+  const a=document.createElement("a");
+  a.href=url;a.download="my-little-world-backup.json";a.click();
+  URL.revokeObjectURL(url);
+}
+function render() {
+  document.getElementById("welcome").textContent="Welcome to "+world+".";
+  renderRooms();
+  renderList("thoughtList",thoughts,"deleteThought");
+  renderList("schoolList",school,"deleteSchool");
+  renderList("memoryList",memories,"deleteMemory");
+  document.getElementById("goalList").innerHTML=goals.length ? goals.map((g,i)=>`
+    <div class="goal-row">
+      <input type="checkbox" style="width:auto" ${g.done?"checked":""} onchange="toggleGoal(${i})">
+      <span style="${g.done?"text-decoration:line-through;color:#aaa":""}">${safe(g.text)}</span>
+      <button onclick="deleteGoal(${i})">×</button>
+    </div>`).join("") : '<div class="empty">Your dreams will appear here ♡</div>';
+  document.getElementById("worldName").value=world;
+  document.getElementById("moodResult").textContent=mood ? "Today you're feeling: "+mood+" ♡" : "";
+  document.querySelectorAll("#moodButtons .mood").forEach(b=>
+    b.classList.toggle("selected",b.dataset.mood===mood)
+  );
+}
+const savedTheme=getData("theme","lavender");
+setTheme(savedTheme);
+render();
+</script>
+</body>
+</html>
